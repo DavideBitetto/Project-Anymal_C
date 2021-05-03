@@ -1,0 +1,7 @@
+<library path = "lib/libmy_controller_lib">
+	<class name= "anymal_c_simple_description/floating_base_controller"
+		type= "my_controller_ns::floating_base_controller"
+		base_class_type= "controller_interface::ControllerBase">
+	</class>
+</library>
+
