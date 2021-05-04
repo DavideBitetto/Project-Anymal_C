@@ -9,14 +9,14 @@
 
 <robot name="anymal">
 
-		 <gazebo>
+<gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/anymal</robotNamespace>
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>	
 	
-    <!-- Base link -->
+   
     <link name="base">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -1608,6 +1608,71 @@
             <inertia ixx="0.001" ixy="0.001" ixz="0.001" iyy="0.001" iyz="0.001" izz="0.001"/>
         </inertial>
     </link>
+     <!-- Trans base_link -->  
+    <!--<transmission name="tran_Tx">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="world_to_trans_x">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Tx">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+    <transmission name="tran_Ty">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="trans_x_to_trans_y">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Ty">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+   <transmission name="tran_Tz">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="trans_y_to_trans_z">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Tz">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <transmission name="tran_Rz">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="trans_z_to_rot_z">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Rz">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+    <transmission name="tran_Ry">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rot_z_to_rot_y">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Ry">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+   <transmission name="tran_Rx">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rot_y_to_rot_base">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_Rx">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission> -->
+  
+    
+    
   <!-- Trans LF -->  
     <transmission name="tran_1">
     <type>transmission_interface/SimpleTransmission</type>

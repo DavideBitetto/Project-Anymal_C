@@ -1,0 +1,23 @@
+anymal:
+
+  floating_base_controller:
+    type: anymal_c_simple_description/floating_base_controller
+    joint_names:
+         - world_to_trans_x
+         - trans_x_to_trans_y
+         - trans_y_to_trans_z
+         - trans_z_to_rot_z
+         - rot_z_to_rot_y
+         - rot_y_to_rot_torso
+         - LF_HAA
+         - LF_HFE
+         - LF_KFE
+         - RF_HAA
+         - RF_HFE
+         - RF_KFE
+         - LH_HAA
+         - LH_HFE
+         - LH_KFE
+         - RH_HAA
+         - RH_HFE
+         - RH_KFE

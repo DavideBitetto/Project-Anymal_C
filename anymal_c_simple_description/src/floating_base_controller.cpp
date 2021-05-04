@@ -8,7 +8,7 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
     this->n = n;
     //Creazione del modello
     model = new Model();
-
+    
     string path;
     if (!n.getParam("/path", path)) 
     {
@@ -17,7 +17,7 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
     }
     
     const char *path_char = path.c_str();
-    if (!Addons::URDFReadFromFile (path_char, model, true, false));
+    if (!Addons::URDFReadFromFile(path_char, model, false, false));
     {
         std::cerr << "Error loading model ./onearm_ego.xacro" << std::endl;
         // abort();
@@ -52,19 +52,22 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
     */
 
     std::vector<std::string> joint_names;
-    if (!n.getParam("joint_names", joint_names) || joint_names.size() != 13) 
+    if (!n.getParam("joint_names", joint_names) || joint_names.size() != 18) 
     {
         ROS_ERROR("Error in parsing joints name!");
         return false;
     }
 
-    for (size_t i = 0; i < 13; ++i)
+    cout << "ci sono" << endl;
+
+    for (size_t i = 0; i < 18; ++i)
     {
         joint_handle.push_back(hw->getHandle(joint_names[i]));
-        //command_q_d[i] = joint_handle[i].getPosition();
-        //command_dot_q_d[i] = joint_handle[i].getVelocity();
+        command_q_d[i] = joint_handle[i].getPosition();
+        command_dot_q_d[i] = joint_handle[i].getVelocity();
     }
     
+    cout << "okokok" << endl;
     
     this->sub_command_ = n.subscribe<sensor_msgs::JointState> ("command", 1, &floating_base_controller::setCommandCB, this);  
      
@@ -81,7 +84,7 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
     {
         
 
-        for (size_t i = 0; i<13; i++)
+        for (size_t i = 0; i<18; i++)
         {
             q_curr(i) = joint_handle[i].getPosition();
             dot_q_curr(i) = joint_handle[i].getVelocity();
@@ -96,28 +99,6 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
         index_link(1) = model->GetBodyId("RF_FOOT");
         index_link(2) = model->GetBodyId("LH_FOOT");
         index_link(3) = model->GetBodyId("RH_FOOT");
-
-        /*
-        index_link(4) = model->GetBodyId("LF_SHANK");
-        index_link(5) = model->GetBodyId("LF_FOOT");
-        index_link(6) = model->GetBodyId("LH_HAA");
-        index_link(7) = model->GetBodyId("LH_HIP");
-        index_link(8) = model->GetBodyId("LH_THIGH");
-        index_link(9) = model->GetBodyId("LH_SHANK");
-        index_link(10) = model->GetBodyId("LH_FOOT");
-        index_link(11) = model->GetBodyId("RF_HAA");
-        index_link(12) = model->GetBodyId("RF_HIP");
-        index_link(13) = model->GetBodyId("RF_THIGH");
-        index_link(14) = model->GetBodyId("RF_SHANK");
-        index_link(15) = model->GetBodyId("RF_FOOT");
-        index_link(16) = model->GetBodyId("RH_HAA");
-        index_link(17) = model->GetBodyId("RH_HIP");
-        index_link(18) = model->GetBodyId("RH_THIGH");
-        index_link(19) = model->GetBodyId("RH_SHANK"); 
-        index_link(20) = model->GetBodyId("RH_FOOT"); 
-        */
-
-        
 
         
         cout<<"Index vector of the link"<< endl;
@@ -193,12 +174,11 @@ bool floating_base_controller::init(hardware_interface::EffortJointInterface* hw
             joint_handle[i + 6].setCommand(tau_cmd[i]);
         }
     }
-        void setCommandCB(const sensor_msgs::JointStateConstPtr& msg)
-        {
-            Eigen::MatrixXd command_q_d = Eigen::Map<const Eigen::Matrix<double, 18, 1>>((msg->position).data());
-            Eigen::MatrixXd command_dot_q_d = Eigen::Map<const Eigen::Matrix<double, 18, 1>>((msg->velocity).data());
-            Eigen::MatrixXd command_dot_dot_q_d = Eigen::Map<const Eigen::Matrix<double, 18, 1>>((msg->effort).data());
-        }
+      void floating_base_controller::setCommandCB(const sensor_msgs::JointStateConstPtr& msg)
+     {
+        command_q_d = Eigen::Map<const Eigen::Matrix<double, 18, 1>>((msg->position).data());
+        command_dot_q_d = Eigen::Map<const Eigen::Matrix<double, 18, 1>>((msg->velocity).data());
+    }
 
 
     PLUGINLIB_EXPORT_CLASS(my_controller_ns::floating_base_controller, controller_interface::ControllerBase);

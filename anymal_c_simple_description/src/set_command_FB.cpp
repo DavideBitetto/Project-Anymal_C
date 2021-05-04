@@ -23,27 +23,32 @@ int main(int argc, char** argv)
         joint_state.velocity.resize(18);
         joint_state.effort.resize(18);
         
-        joint_state.name[0]="base_joint";
+        joint_state.name[0]="world_to_trans_x";
         joint_state.position[0] = 0.0;
         joint_state.velocity[0] = 0.0;
         joint_state.effort[0] = 0.0;
 
+        joint_state.name[1]="trans_x_to_trans_y";
         joint_state.position[1] = 0.0;
         joint_state.velocity[1] = 0.0;
         joint_state.effort[1] = 0.0;
         
+        joint_state.name[2]="trans_y_to_trans_z";
         joint_state.position[2] = 0.63;
         joint_state.velocity[2] = 0.0;
         joint_state.effort[2] = 0.0;
         
+        joint_state.name[3]="trans_z_to_rot_z";
         joint_state.position[3] = 0.0;
         joint_state.velocity[3] = 0.0;
         joint_state.effort[3] = 0.0;
         
+        joint_state.name[4]="rot_z_to_rot_y";
         joint_state.position[4] = 0.0;
         joint_state.velocity[4] = 0.0;
         joint_state.effort[4] = 0.0;
         
+        joint_state.name[5]="rot_y_to_rot_torso";
         joint_state.position[5] = 0.0;
         joint_state.velocity[5] = 0.0;
         joint_state.effort[5] = 0.0;

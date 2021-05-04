@@ -57,7 +57,7 @@ class floating_base_controller: public controller_interface::Controller<hardware
     
     void update(const ros::Time&, const ros::Duration& period);
     
-    private:
+    //private:
     /* Definig the timing */
     
     double kp, kv;
@@ -86,7 +86,7 @@ class floating_base_controller: public controller_interface::Controller<hardware
     
     /* Setting Command Callback*/
     
-    void setCommandCB (const sensor_msgs::JointStateConstPtr& msg);
+     void setCommandCB(const sensor_msgs::JointStateConstPtr& msg);
     
     std::vector<hardware_interface::JointHandle> joint_handle;
 };

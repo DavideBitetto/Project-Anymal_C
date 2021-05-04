@@ -6,53 +6,6 @@
 <robot name="anymal">
     <!-- Base link -->
      <link name="base_link"/>
-     
-     <joint name="world_to_trans_x" type="prismatic">
-	  <parent link="base_link"/>
-	  <child link="trans_x"/>
-	  <axis xyz="1 0 0"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  <link name="trans_x"/>
-
-  <joint name="trans_x_to_trans_y" type="prismatic">
-	  <parent link="trans_x"/>
-	  <child link="trans_y"/>
-	  <axis xyz="0 1 0"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  
-  <link name="trans_y"/>
-  
-    <joint name="trans_y_to_trans_z" type="prismatic">
-	  <parent link="trans_y"/>
-	  <child link="trans_z"/>
-	  <axis xyz="0 0 1"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  
-  <link name="trans_z"/>
-  
-  <joint name="trans_z_to_rot_z" type="continuous">
-	  <parent link="trans_z"/>
-	  <child link="rot_z"/>
-	  <axis xyz="0 0 1"/>
-  </joint>
-  <link name="rot_z"/>
-
-  <joint name="rot_z_to_rot_y" type="continuous">
-	  <parent link="rot_z"/>
-	  <child link="rot_y"/>
-	  <axis xyz="0 1 0"/>
-  </joint>
-  <link name="rot_y"/>
-
-
-  <joint name="rot_y_to_rot_torso" type="continuous"> 
-	  <parent link="rot_y"/>
-	  <child link="Torso"/>
-	  <axis xyz="1 0 0"/>
-  </joint>
 
     <link name="Torso">
         <visual>
@@ -99,13 +52,13 @@
             </geometry>
         </self_filter>
     </link>
-<!--
+
  <joint name="base_joint" type="floating">
     <child link="Torso"/>
     <parent link="base_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
--->
+
     <!-- Fixed joint to add dummy inertia link -->
     <joint name="base_to_base_inertia" type="fixed">
         <parent link="Torso"/>
