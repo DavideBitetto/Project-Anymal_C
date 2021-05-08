@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cmath>
 #include <eigen3/Eigen/Dense>
-#include <urdf/model.h>
 
 #include <controller_interface/controller.h>
 #include <hardware_interface/joint_command_interface.h>
@@ -21,12 +20,21 @@
 #include <ros/node_handle.h>
 #include <ros/time.h>
 
+
 #include <rbdl/rbdl.h>
 #include <rbdl/rbdl_utils.h>
 #include <rbdl/addons/urdfreader/urdfreader.h>
 #include <rbdl/Constraints.h>
+#include "gazebo_msgs/LinkStates.h"
+#include "gazebo_msgs/LinkState.h"
+#include "geometry_msgs/Twist.h"
+#include "geometry_msgs/Pose.h"
 
 #include <sensor_msgs/JointState.h>
+#include "tf/transform_datatypes.h"
+
+#include <sensor_msgs/JointState.h>
+
 
 using namespace RigidBodyDynamics;
 using namespace RigidBodyDynamics::Math;
@@ -41,13 +49,6 @@ class floating_base_controller: public controller_interface::Controller<hardware
     public:
     Model* model; 
 
-    Eigen::MatrixXd M_; 
-    Eigen::VectorXd c_; 
-    Eigen::VectorXd cor_; 
-    Eigen::VectorXd g_; 
-    Eigen::MatrixXd S_; 
-    Eigen::MatrixXd Nc_; 
-    Eigen::MatrixXd Jc_; 
     
     bool init(hardware_interface::EffortJointInterface* hw, ros::NodeHandle &n);
     
@@ -56,11 +57,24 @@ class floating_base_controller: public controller_interface::Controller<hardware
     void stopping(const ros::Time&);
     
     void update(const ros::Time&, const ros::Duration& period);
+
+    void state_estimator(const gazebo_msgs::LinkStatesConstPtr& msg);
+
+    void setCommandCB(const sensor_msgs::JointStateConstPtr& msg);
     
-    //private:
+    private:
     /* Definig the timing */
+
+    Eigen::MatrixXd M_; 
+    Eigen::VectorXd c_; 
+    Eigen::VectorXd cor_; 
+    Eigen::VectorXd g_; 
+    Eigen::MatrixXd S_; 
+    Eigen::MatrixXd Nc_; 
+    Eigen::MatrixXd Jc_; 
     
     double kp, kv;
+    double roll, pitch, yaw;
     /* Gain Matrices */
     /* Defining q_current, dot_q_current, and tau_cmd */
     
@@ -68,6 +82,10 @@ class floating_base_controller: public controller_interface::Controller<hardware
     Eigen::Matrix<double, 18, 1> dot_q_curr;
     Eigen::Matrix<double, 18, 1> dot_dot_q_curr;
     Eigen::Matrix<double, 18, 1> tau_cmd;
+
+    Eigen::Matrix<double, 7, 1> q_temp;
+    Eigen::Matrix<double, 3, 1> rpy_temp;
+    Eigen::Matrix<double, 6, 1> dot_q_temp;
     
     /* Error and dot error feedback */
     Eigen::Matrix<double, 18, 1> err;
@@ -83,10 +101,12 @@ class floating_base_controller: public controller_interface::Controller<hardware
     ros::NodeHandle n;
     ros::Subscriber sub_command_;
     ros::Publisher pub_err_;
-    
+    ros::Subscriber sub_gaze;
+
+    geometry_msgs::Pose pose;
+    geometry_msgs::Twist twist;
     /* Setting Command Callback*/
     
-     void setCommandCB(const sensor_msgs::JointStateConstPtr& msg);
     
     std::vector<hardware_interface::JointHandle> joint_handle;
 };

@@ -5,56 +5,7 @@
 <!-- This file contains the description of the ANYmal C robot. -->
 <robot name="anymal">
     <!-- Base link -->
-     <link name="base_link"/>
-     
-     <joint name="world_to_trans_x" type="prismatic">
-	  <parent link="base_link"/>
-	  <child link="trans_x"/>
-	  <axis xyz="1 0 0"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  <link name="trans_x"/>
-
-  <joint name="trans_x_to_trans_y" type="prismatic">
-	  <parent link="trans_x"/>
-	  <child link="trans_y"/>
-	  <axis xyz="0 1 0"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  
-  <link name="trans_y"/>
-  
-    <joint name="trans_y_to_trans_z" type="prismatic">
-	  <parent link="trans_y"/>
-	  <child link="trans_z"/>
-	  <axis xyz="0 0 1"/>
-	  <limit lower="-100000" upper="100000" effort="100000" velocity="100000"/>
-  </joint>
-  
-  <link name="trans_z"/>
-  
-  <joint name="trans_z_to_rot_z" type="continuous">
-	  <parent link="trans_z"/>
-	  <child link="rot_z"/>
-	  <axis xyz="0 0 1"/>
-  </joint>
-  <link name="rot_z"/>
-
-  <joint name="rot_z_to_rot_y" type="continuous">
-	  <parent link="rot_z"/>
-	  <child link="rot_y"/>
-	  <axis xyz="0 1 0"/>
-  </joint>
-  <link name="rot_y"/>
-
-
-  <joint name="rot_y_to_rot_torso" type="continuous"> 
-	  <parent link="rot_y"/>
-	  <child link="Torso"/>
-	  <axis xyz="1 0 0"/>
-  </joint>
-
-    <link name="Torso">
+    <link name="base">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -91,6 +42,11 @@
                 <cylinder length="0.145" radius="0.09"/>
             </geometry>
         </collision>
+           <inertial>
+            <origin rpy="0 0 0" xyz="-0.018 -0.002 0.024"/>
+            <mass value="3.222"/>
+            <inertia ixx="0.017938806" ixy="0.00387963" ixz="0.001500772" iyy="0.370887745" iyz="6.8963e-05" izz="0.372497653"/>
+        </inertial>
         <!-- Shell self filtering -->
         <self_filter>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -99,30 +55,11 @@
             </geometry>
         </self_filter>
     </link>
-<!--
- <joint name="base_joint" type="floating">
-    <child link="Torso"/>
-    <parent link="base_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
--->
-    <!-- Fixed joint to add dummy inertia link -->
-    <joint name="base_to_base_inertia" type="fixed">
-        <parent link="Torso"/>
-        <child link="base_inertia"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-    </joint>
-    <!-- Dummy inertia link, because KDL cannot have inertia on the base link -->
-    <link name="base_inertia">
-        <inertial>
-            <origin rpy="0 0 0" xyz="-0.018 -0.002 0.024"/>
-            <mass value="6.222"/>
-            <inertia ixx="0.017938806" ixy="0.00387963" ixz="0.001500772" iyy="0.370887745" iyz="6.8963e-05" izz="0.372497653"/>
-        </inertial>
-    </link>
+
+  
     <!-- Fixed joint base topshell -->
     <joint name="base_top_shell" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="top_shell"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -142,7 +79,7 @@
     </link>
     <!-- Fixed joint base topshell -->
     <joint name="base_bottom_shell" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="bottom_shell"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -162,7 +99,7 @@
     </link>
     <!-- Fixed joint base remote -->
     <joint name="base_remote" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="remote"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -182,7 +119,7 @@
     </link>
     <!-- Fixed joint base handle -->
     <joint name="base_handle" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="handle"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -202,7 +139,7 @@
     </link>
     <!-- Fixed joint base face -->
     <joint name="base_face_front" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="face_front"/>
         <origin rpy="0 0 -0.0" xyz="0.4145 0 0"/>
     </joint>
@@ -323,7 +260,7 @@
     <link name="wide_angle_camera_front_camera_parent"/>
     <!-- Fixed joint base face -->
     <joint name="base_face_rear" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="face_rear"/>
         <origin rpy="0 0 3.14159265359" xyz="-0.4145 0 0"/>
     </joint>
@@ -444,7 +381,7 @@
     <link name="wide_angle_camera_rear_camera_parent"/>
     <!-- Fixed joint base battery -->
     <joint name="base_battery" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="battery"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -464,7 +401,7 @@
     </link>
     <!-- Fixed joint to add docking  -->
     <joint name="base_to_docking_hatch_cover" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="docking_hatch_cover"/>
         <origin rpy="0 0 0" xyz="0.343 0.0 -0.07"/>
     </joint>
@@ -498,14 +435,14 @@
         </inertial>
     </link>
     <joint name="imu_joint" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="imu_link"/>
         <origin rpy="0.0 0.0 1.57079632679" xyz="0.2488 0.00835 0.04628"/>
     </joint>
     <!-- Camera joint -->
     <!-- Is located between the two back screw holes at ground level. -->
     <joint name="base_to_depth_camera_left_camera" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="depth_camera_left_camera"/>
         <origin rpy="0.0 0.523598775598 1.57079632679" xyz="0.0 0.07646 0.02905"/>
     </joint>
@@ -559,7 +496,7 @@
     <!-- Camera joint -->
     <!-- Is located between the two back screw holes at ground level. -->
     <joint name="base_to_depth_camera_right_camera" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="depth_camera_right_camera"/>
         <origin rpy="0.0 0.523598775598 -1.57079632679" xyz="0.0 -0.07646 0.02905"/>
     </joint>
@@ -612,7 +549,7 @@
     <link name="depth_camera_right_color_optical_frame"/>
     <!-- parent to cage joint, located between mounting plate on trunk and the cage -->
     <joint name="base_to_lidar_cage" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="lidar_cage"/>
         <origin rpy="0 0 0" xyz="-0.364 0.0 0.0735"/>
     </joint>
@@ -658,7 +595,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_LF_HAA" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="LF_HAA"/>
         <origin rpy="2.61799387799 0 0.0" xyz="0.2999 0.104 0.0"/>
     </joint>
@@ -683,6 +620,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-0.72" upper="0.49" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LF_HIP">
@@ -745,6 +683,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LF_THIGH">
@@ -820,6 +759,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LF_SHANK">
@@ -899,7 +839,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_RF_HAA" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="RF_HAA"/>
         <origin rpy="-2.61799387799 0 0.0" xyz="0.2999 -0.104 0.0"/>
     </joint>
@@ -924,6 +864,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-0.49" upper="0.72" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RF_HIP">
@@ -986,6 +927,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RF_THIGH">
@@ -1061,6 +1003,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RF_SHANK">
@@ -1140,7 +1083,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_LH_HAA" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="LH_HAA"/>
         <origin rpy="-2.61799387799 0 -3.14159265359" xyz="-0.2999 0.104 0.0"/>
     </joint>
@@ -1165,6 +1108,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-0.72" upper="0.49" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LH_HIP">
@@ -1227,6 +1171,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LH_THIGH">
@@ -1302,6 +1247,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="LH_SHANK">
@@ -1381,7 +1327,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_RH_HAA" type="fixed">
-    <parent link ="Torso"/>
+        <parent link="base"/>
         <child link="RH_HAA"/>
         <origin rpy="2.61799387799 0 -3.14159265359" xyz="-0.2999 -0.104 0.0"/>
     </joint>
@@ -1406,6 +1352,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-0.49" upper="0.72" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RH_HIP">
@@ -1468,6 +1415,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RH_THIGH">
@@ -1543,6 +1491,7 @@
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <axis xyz="-1 0 0"/>
         <limit effort="80.0" lower="-9.42477796077" upper="9.42477796077" velocity="7.5"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <!-- Drive output link -->
     <link name="RH_SHANK">
@@ -1622,7 +1571,7 @@
     </link>
     <!-- Fixed joint base hatch -->
     <joint name="base_hatch" type="fixed">
-        <parent link="Torso"/>
+        <parent link="base"/>
         <child link="hatch"/>
         <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     </joint>

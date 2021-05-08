@@ -34,7 +34,7 @@ int main(int argc, char** argv)
         joint_state.effort[1] = 0.0;
         
         joint_state.name[2]="trans_y_to_trans_z";
-        joint_state.position[2] = 0.63;
+        joint_state.position[2] = 0.628;
         joint_state.velocity[2] = 0.0;
         joint_state.effort[2] = 0.0;
         

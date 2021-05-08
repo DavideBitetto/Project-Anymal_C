@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+ 
+  <rosparam file="$(find anymal_c_simple_description)/config/anymal_control.yaml" command="load"/>
+
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+  	output="screen" ns="/anymal" args="floating_base_controller"/> 
+
+ 
+</launch>

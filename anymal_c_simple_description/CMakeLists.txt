@@ -12,6 +12,8 @@ rospy
 cmake_modules
 )
 
+SET(CUSTOM_RBDL_PATH "" CACHE PATH "Path to specific RBDL Installation")
+
 FIND_PACKAGE (RBDL COMPONENTS URDFReader REQUIRED)
 find_package(Eigen3 REQUIRED)
 
@@ -41,6 +43,9 @@ target_link_libraries(floating_lib ${catkin_LIBRARIES}
 
 add_executable(set_command src/set_command_FB.cpp)
 target_link_libraries(set_command ${catkin_LIBRARIES})
+
+add_executable(state_estimator src/state_estimator.cpp)
+target_link_libraries(state_estimator ${catkin_LIBRARIES})
 
 install(DIRECTORY config launch meshes urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}

@@ -54,6 +54,11 @@
                 <cylinder length="0.145" radius="0.09"/>
             </geometry>
         </collision>
+           <inertial>
+            <origin rpy="0 0 0" xyz="-0.018 -0.002 0.024"/>
+            <mass value="6.222"/>
+            <inertia ixx="0.017938806" ixy="0.00387963" ixz="0.001500772" iyy="0.370887745" iyz="6.8963e-05" izz="0.372497653"/>
+        </inertial>
         <!-- Shell self filtering -->
         <self_filter>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -62,20 +67,7 @@
             </geometry>
         </self_filter>
     </link>
-    <!-- Fixed joint to add dummy inertia link -->
-    <joint name="base_to_base_inertia" type="fixed">
-        <parent link="base"/>
-        <child link="base_inertia"/>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-    </joint>
-    <!-- Dummy inertia link, because KDL cannot have inertia on the base link -->
-    <link name="base_inertia">
-        <inertial>
-            <origin rpy="0 0 0" xyz="-0.018 -0.002 0.024"/>
-            <mass value="6.222"/>
-            <inertia ixx="0.017938806" ixy="0.00387963" ixz="0.001500772" iyy="0.370887745" iyz="6.8963e-05" izz="0.372497653"/>
-        </inertial>
-    </link>
+
     <!-- Fixed joint base topshell -->
     <joint name="base_top_shell" type="fixed">
         <parent link="base"/>
