@@ -10,7 +10,7 @@
   <param name="robot_description" command="cat '$(find anymal_c_simple_description)/urdf/anymal.urdf'" />
   
   <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
-          args="-urdf -z 0.635 -param robot_description -model anymal" />
+          args="-urdf -z 0.628 -param robot_description -model anymal" />
   
  
 </launch>

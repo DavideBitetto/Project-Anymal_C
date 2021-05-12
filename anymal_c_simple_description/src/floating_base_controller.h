@@ -48,6 +48,7 @@ class floating_base_controller: public controller_interface::Controller<hardware
 
     public:
     Model* model; 
+    Model* model2;
 
     
     bool init(hardware_interface::EffortJointInterface* hw, ros::NodeHandle &n);
@@ -72,8 +73,7 @@ class floating_base_controller: public controller_interface::Controller<hardware
     Eigen::MatrixXd S_; 
     Eigen::MatrixXd Nc_; 
     Eigen::MatrixXd Jc_; 
-    
-    double kp, kv;
+    double kp1, kp2, kp3, kp4, kv1;
     double roll, pitch, yaw;
     /* Gain Matrices */
     /* Defining q_current, dot_q_current, and tau_cmd */
@@ -82,6 +82,7 @@ class floating_base_controller: public controller_interface::Controller<hardware
     Eigen::Matrix<double, 18, 1> dot_q_curr;
     Eigen::Matrix<double, 18, 1> dot_dot_q_curr;
     Eigen::Matrix<double, 18, 1> tau_cmd;
+   
 
     Eigen::Matrix<double, 7, 1> q_temp;
     Eigen::Matrix<double, 3, 1> rpy_temp;
@@ -94,7 +95,11 @@ class floating_base_controller: public controller_interface::Controller<hardware
     /* Used for saving the last command position and command velocity, and old values to calculate the estimation */
     Eigen::Matrix<double, 18, 1> command_q_d;         // desired command position 
     Eigen::Matrix<double, 18, 1> command_dot_q_d;       // desired command velocity
-    Eigen::Matrix<double, 18, 1> command_dot_dot_q_d;   // estimated desired acceleration command 
+    Eigen::Matrix<double, 18, 1> command_dot_dot_q_d;   // estimated desired acceleration command
+
+    Eigen::Matrix<double, 18, 18> Kp;    
+    Eigen::Matrix<double, 18, 18> Kv;    
+    
     
     
     /* ROS variables */

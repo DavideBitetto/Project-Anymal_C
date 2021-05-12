@@ -6,7 +6,7 @@
 <robot name="anymal">
     <!-- Base link -->
  
-    <link name="base_link">
+    <link name="base">
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
@@ -59,7 +59,7 @@
   
     <!-- Fixed joint base topshell -->
     <joint name="base_top_shell" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="top_shell"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -79,7 +79,7 @@
     </link>
     <!-- Fixed joint base topshell -->
     <joint name="base_bottom_shell" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="bottom_shell"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -99,7 +99,7 @@
     </link>
     <!-- Fixed joint base remote -->
     <joint name="base_remote" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="remote"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -119,7 +119,7 @@
     </link>
     <!-- Fixed joint base handle -->
     <joint name="base_handle" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="handle"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -139,7 +139,7 @@
     </link>
     <!-- Fixed joint base face -->
     <joint name="base_face_front" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="face_front"/>
         <origin rpy="0 0 -0.0" xyz="0.4145 0 0"/>
     </joint>
@@ -260,7 +260,7 @@
     <link name="wide_angle_camera_front_camera_parent"/>
     <!-- Fixed joint base face -->
     <joint name="base_face_rear" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="face_rear"/>
         <origin rpy="0 0 3.14159265359" xyz="-0.4145 0 0"/>
     </joint>
@@ -381,7 +381,7 @@
     <link name="wide_angle_camera_rear_camera_parent"/>
     <!-- Fixed joint base battery -->
     <joint name="base_battery" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="battery"/>
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </joint>
@@ -401,7 +401,7 @@
     </link>
     <!-- Fixed joint to add docking  -->
     <joint name="base_to_docking_hatch_cover" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="docking_hatch_cover"/>
         <origin rpy="0 0 0" xyz="0.343 0.0 -0.07"/>
     </joint>
@@ -435,14 +435,14 @@
         </inertial>
     </link>
     <joint name="imu_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="imu_link"/>
         <origin rpy="0.0 0.0 1.57079632679" xyz="0.2488 0.00835 0.04628"/>
     </joint>
     <!-- Camera joint -->
     <!-- Is located between the two back screw holes at ground level. -->
     <joint name="base_to_depth_camera_left_camera" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="depth_camera_left_camera"/>
         <origin rpy="0.0 0.523598775598 1.57079632679" xyz="0.0 0.07646 0.02905"/>
     </joint>
@@ -496,7 +496,7 @@
     <!-- Camera joint -->
     <!-- Is located between the two back screw holes at ground level. -->
     <joint name="base_to_depth_camera_right_camera" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="depth_camera_right_camera"/>
         <origin rpy="0.0 0.523598775598 -1.57079632679" xyz="0.0 -0.07646 0.02905"/>
     </joint>
@@ -549,7 +549,7 @@
     <link name="depth_camera_right_color_optical_frame"/>
     <!-- parent to cage joint, located between mounting plate on trunk and the cage -->
     <joint name="base_to_lidar_cage" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="lidar_cage"/>
         <origin rpy="0 0 0" xyz="-0.364 0.0 0.0735"/>
     </joint>
@@ -595,7 +595,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_LF_HAA" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="LF_HAA"/>
         <origin rpy="2.61799387799 0 0.0" xyz="0.2999 0.104 0.0"/>
     </joint>
@@ -839,7 +839,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_RF_HAA" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="RF_HAA"/>
         <origin rpy="-2.61799387799 0 0.0" xyz="0.2999 -0.104 0.0"/>
     </joint>
@@ -1083,7 +1083,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_LH_HAA" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="LH_HAA"/>
         <origin rpy="-2.61799387799 0 -3.14159265359" xyz="-0.2999 0.104 0.0"/>
     </joint>
@@ -1327,7 +1327,7 @@
     </link>
     <!-- joint base HAA -->
     <joint name="base_RH_HAA" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="RH_HAA"/>
         <origin rpy="2.61799387799 0 -3.14159265359" xyz="-0.2999 -0.104 0.0"/>
     </joint>
@@ -1571,7 +1571,7 @@
     </link>
     <!-- Fixed joint base hatch -->
     <joint name="base_hatch" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="hatch"/>
         <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     </joint>
